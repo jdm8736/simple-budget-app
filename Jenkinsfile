@@ -22,7 +22,7 @@ THE SOFTWARE.
 
 node {
   stage('Init') {
-    env.NODEJS_HOME = "${tool 'Node 8.2.1'}"
+    env.NODEJS_HOME = "${tool 'NodeMain'}"
     env.PATH="${env.NODEJS_HOME}:${env.PATH}"
   }
 
