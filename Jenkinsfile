@@ -22,10 +22,8 @@ THE SOFTWARE.
 
 node {
   stage('Init') {
-    env.NODEJS_HOME = "${tool 'NodeMain'}"
-    print env.NODEJS_HOME
-    env.PATH="${env.NODEJS_HOME}:${env.PATH}"
-    print "Environment will be: ${env.NODE_ENV}"
+    def node = tool name: 'NodeMain', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+    env.PATH = "${node}/bin:${env.PATH}"
 
     sh 'node -v'
     sh 'npm i'
