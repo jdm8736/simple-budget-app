@@ -23,6 +23,7 @@ THE SOFTWARE.
 node {
   stage('Init') {
     env.NODEJS_HOME = "${tool 'NodeMain'}"
+    print env.NODEJS_HOME
     env.PATH="${env.NODEJS_HOME}:${env.PATH}"
     print "Environment will be: ${env.NODE_ENV}"
 
