@@ -22,7 +22,7 @@ THE SOFTWARE.
 
 node {
   stage('Init') {
-    def node = tool name: 'Node-8.2.0', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+    def node = tool name: 'Node-8.2.1', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
     env.PATH = "${node}/bin:${env.PATH}"
   }
 
