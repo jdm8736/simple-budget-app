@@ -21,11 +21,15 @@ THE SOFTWARE.
 */
 
 node {
+  stage('Init') {
+    def node = tool name: 'Node-8.2.0', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+    env.PATH = "${node}/bin:${env.PATH}"
+  }
+
   stage('Npm install') {
     print "Environment will be: ${env.NODE_ENV}"
 
     sh 'node -v'
-    sh 'npm prune'
     sh 'npm i'
   }
 
