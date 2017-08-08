@@ -24,16 +24,10 @@ node {
   stage('Init') {
     env.NODEJS_HOME = "${tool 'NodeMain'}"
     env.PATH="${env.NODEJS_HOME}:${env.PATH}"
-  }
-
-  stage('Npm install') {
     print "Environment will be: ${env.NODE_ENV}"
 
     sh 'node -v'
     sh 'npm i'
-  }
-
-  stage('FOR NOW') {
     print "FOR NOW, run dev"
     sh 'npm run dev'
   }
