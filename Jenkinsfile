@@ -24,7 +24,13 @@ node {
   stage('Init') {
     def node = tool name: 'NodeMain', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
     env.PATH = "${node}/bin:${env.PATH}"
+  }
+  stage('Checkout') {
+    echo 'Getting source code...'
+    checkout scm
+  }
 
+  stage('GO NODE') {
     sh 'node -v'
     sh 'npm i'
     print "FOR NOW, run dev"
