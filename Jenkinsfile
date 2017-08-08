@@ -20,6 +20,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-stage('Testing') {
-  print "SOMETHINGS HAPPENING"
+stage('Npm install') {
+  print "Environment will be: ${env.NODE_ENV}"
+
+  sh 'node -v'
+  sh 'npm prune'
+  sh 'npm i'
+}
+
+stage('FOR NOW') {
+  print "FOR NOW, run dev"
+  sh 'npm run dev'
 }
