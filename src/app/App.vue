@@ -1,11 +1,7 @@
 <template>
   <div id="app">
-    <div class="columns app-container">
-      <div class="column is-3 sidebar"><span class="brand"><img src="../assets/logo.png"></span></div>
-    </div>
-    <div class="column">
-      <router-view></router-view>
-    </div>
+    <img src="../assets/logo.png">
+    <router-view></router-view>
   </div>
 </template>
 

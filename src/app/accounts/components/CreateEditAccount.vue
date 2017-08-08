@@ -3,20 +3,23 @@
     You can create and edit accounts with me, yay!
     <router-link :to="{ name: 'accountsListView' }">View all accounts</router-link>
 
-    <form @submit.prevent="saveNewAccount" class="form">
+    <form @submit.prevent="processSave" class="form">
       <label for="name" class="label">Name</label>
       <p class="control">
-        <input type="text" class="input" name="name" v-model="newAccount.name">
+        <input type="text" class="input" name="name" v-model="selectedAccount.name">
       </p>
+      <label for="category" class="label">Category</label>
       <p class="control">
         <span class="select">
-          <select name="category" v-model="newAccount.category">
+          <select name="category" v-model="selectedAccount.category">
             <option v-for="value, key in categories" :value="key">{{ value }}</option>
           </select>
         </span>
       </p>
+      <label for="balance" class="label">Balance</label>
       <p class="control">
-        <input type="text" class="input" name="balance" v-model="newAccount.balance">
+        <input type="text" class="input" name="balance" v-model="selectedAccount.balance" v-if="!editing">
+        <span v-else>To update your balance, add a balance-adjusting transaction</span>
       </p>
       <div class="control is-grouped">
         <p class="control">
@@ -31,28 +34,67 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import { CATEGORIES } from '../../../consts'
 
 export default {
-  name: 'createEditAccount',
+  name: 'accounts-create-edit-view',
 
-  methods: {
-    ...mapActions([
-      'addAccount'
-    ]),
-
-    saveNewAccount() {
-      this.addAccount(this.newAccount).then(() => {
-        this.newAccount = {}
-      })
-    }
-  },
-  data () {
+  data: () => {
     return {
       categories: CATEGORIES,
-      newAccount: {}
+      selectedAccount: {},
+      editing: false
     };
+  },
+  mounted() {
+    alert('MOUNTED')
+    if ('accountId' in this.$route.params) {
+      alert('accountid :', this.$route.params['accountId'])
+      let selectedAccount = this.getAccountById(this.$route.params.accountId)
+      if (selectedAccount) {
+        this.editing = true
+        this.selectedAccount = {
+          name: selectedAccount.name,
+          category: selectedAccount.category,
+          id: selectedAccount.id,
+        }
+      }
+      // TODO: the object does not exist, how do we handle?
+    }
+  },
+  methods: {
+    ...mapActions([
+      'addAccount',
+      'updateAccount',
+    ]),
+
+    resetAndGo() {
+      this.selectedAccount = {}
+      this.$router.push({ name: 'accountsListView' })
+    },
+
+    saveNewAccount() {
+      this.addAccount(this.selectedAccount).then(()=> {
+        this.resetAndGo()
+      })
+    },
+
+    saveAccount() {
+      this.updateAccount(this.selectedAccount).then(() => {
+        this.resetAndGo()
+      })
+    },
+
+    processSave() {
+      this.editing ? this.saveAccount() : this.saveNewAccount()
+    }
+  },
+
+  computed: {
+    ...mapGetters([
+      'getAccountById'
+    ])
   }
 };
 </script>
