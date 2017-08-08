@@ -20,8 +20,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-node('node') {
-  currentBuild.result = "Success"
-
+stage('Testing') {
   print "SOMETHINGS HAPPENING"
 }
