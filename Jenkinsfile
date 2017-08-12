@@ -37,6 +37,6 @@ node {
   }
 
   stage('run app') {
-    sh 'node server.js'
+    echo 'Run app here'
   }
 }
