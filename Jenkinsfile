@@ -24,6 +24,7 @@ node {
   stage('Init') {
     def node = tool name: 'NodeMain', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
     env.PATH = "${node}/bin:${env.PATH}"
+
   }
   stage('Checkout') {
     echo 'Getting source code...'
@@ -36,7 +37,17 @@ node {
     sh 'npm run build'
   }
 
-  stage('run app') {
-    echo 'Run app here'
+  stage('build docker') {
+    docker.withTool('Docker') {
+      sh 'printenv'
+      sh 'docker images'
+      base = docker.build('budget-app')
+    }
+  }
+
+  stage('run docker') {
+    echo 'Kill docker image here'
+    echo 'Run docker image here -p 8081:8081 -d --init'
+    echo 'Prune docker images here'
   }
 }
