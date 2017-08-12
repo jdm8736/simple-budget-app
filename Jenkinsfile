@@ -24,8 +24,6 @@ node {
   stage('Init') {
     def node = tool name: 'NodeMain', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
     env.PATH = "${node}/bin:${env.PATH}"
-    def docker = tool name: 'Docker', type: 'jenkins.plugins.docker.tools.DockerInstallation'
-    env.PATH = "${docker}/bin:${env.PATH}"
   }
   stage('Checkout') {
     echo 'Getting source code...'
