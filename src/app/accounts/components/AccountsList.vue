@@ -3,6 +3,7 @@
     I'm a list of accounts!
 
     <router-link :to="{ name: 'createAccount' }">Add an Account</router-link>
+    <router-link :to="{ name: 'budgetsList' }">View budgets</router-link>
 
     <ul>
       <li v-for="account, key in accounts">
@@ -10,7 +11,7 @@
         <span class="tag is-small is-info">{{ categories[account.category] }}</span>
         ${{ account.balance }}
         <a @click="confirmDeleteAccount(account)">Delete</a>
-        <router-link :to="{ name: 'editAccount', params: { accountId: account.id } }">Edit</router-link>
+        <router-link :to="{ name: 'updateAccount', params: { accountId: account.id } }">Edit</router-link>
       </li>
     </ul>
   </div>
@@ -21,7 +22,7 @@ import { mapState, mapActions } from 'vuex'
 import { CATEGORIES } from '../../../consts'
 
 export default {
-  name: 'accountsListView',
+  name: 'accounts-list-view',
 
   data () {
     return {
@@ -29,9 +30,14 @@ export default {
     };
   },
 
+  mounted() {
+    this.loadAccounts()
+  },
+
   methods: {
     ...mapActions([
       'deleteAccount',
+      'loadAccounts'
     ]),
 
     confirmDeleteAccount(account) {

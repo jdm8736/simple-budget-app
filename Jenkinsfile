@@ -33,7 +33,10 @@ node {
   stage('GO NODE') {
     sh 'node -v'
     sh 'npm i'
-    print "FOR NOW, run dev"
-    sh 'npm run dev'
+    sh 'npm run build'
+  }
+
+  stage('run app') {
+    sh 'node server.js'
   }
 }

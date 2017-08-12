@@ -48,25 +48,22 @@ export default {
     };
   },
   mounted() {
-    alert('MOUNTED')
     if ('accountId' in this.$route.params) {
-      alert('accountid :', this.$route.params['accountId'])
-      let selectedAccount = this.getAccountById(this.$route.params.accountId)
+      this.loadAccounts().then(() => {
+        let selectedAccount = this.getAccountById(this.$route.params.accountId);
       if (selectedAccount) {
-        this.editing = true
-        this.selectedAccount = {
-          name: selectedAccount.name,
-          category: selectedAccount.category,
-          id: selectedAccount.id,
+          this.editing = true
+          this.selectedAccount = Object.assign({}, selectedAccount)
         }
-      }
-      // TODO: the object does not exist, how do we handle?
+      // TODO: the object does not exist, how do we handle this scenario?
+      });
     }
   },
   methods: {
     ...mapActions([
-      'addAccount',
+      'createAccount',
       'updateAccount',
+      'loadAccounts'
     ]),
 
     resetAndGo() {
@@ -75,9 +72,9 @@ export default {
     },
 
     saveNewAccount() {
-      this.addAccount(this.selectedAccount).then(()=> {
+      this.createAccount(this.selectedAccount).then(() => {
         this.resetAndGo()
-      })
+      });
     },
 
     saveAccount() {
