@@ -5,7 +5,7 @@ WORKDIR /home/nodejs/budgetapp
 
 RUN npm install express
 
-COPY dist/ /home/nodejs/budgetapp
+COPY dist/ /home/nodejs/budgetapp/dist
 COPY server.js /home/nodejs/budgetapp
 
 CMD ["node", "server.js"]

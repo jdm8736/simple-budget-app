@@ -24,7 +24,8 @@ node {
   stage('Init') {
     def node = tool name: 'NodeMain', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
     env.PATH = "${node}/bin:${env.PATH}"
-
+    def docker = tool name: 'Docker', type: 'jenkins.plugins.docker.tools.DockerTool'
+    env.PATH
   }
   stage('Checkout') {
     echo 'Getting source code...'
@@ -38,11 +39,12 @@ node {
   }
 
   stage('build docker') {
-    docker.withTool('Docker') {
-      sh 'printenv'
-      sh 'docker images'
-      base = docker.build('budget-app')
-    }
+    sh 'docker --version'
+    // docker.withTool('Docker') {
+    //   sh 'printenv'
+    //   sh 'docker images'
+    //   base = docker.build('budget-app')
+    // }
   }
 
   stage('run docker') {

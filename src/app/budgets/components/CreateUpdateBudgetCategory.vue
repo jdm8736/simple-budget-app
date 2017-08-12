@@ -4,7 +4,15 @@
       <div class="control is-horizontal">
         <div class="control is-grouped">
           <div class="control is-expanded">
-            <input type="text" v-model="budgetCategory.category">
+            <multiselect
+              :value="budgetCategory.category"
+              :taggable="true"
+              @tag="handleCreateCategory"
+              @input="updateCategorySelection"
+              :options="getCategorySelectList"
+              placeholder="Select or create a category"
+              label="name"
+              track-by="id"
           </div>
           <div class="control is-expanded">
             $<input type="number" class="input" v-model="budgetCategory.budgeted">
@@ -20,11 +28,16 @@
 </template>
 
 <script>
+import Multiselect from 'vue-multiselect'
+import 'vue-multiselect/dist/vue-multiselect.min.css'
+
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'budget-categorycreate-edit-view',
-  components: {},
+  components: {
+    Multiselect,
+  },
   data () {
     return {
       budgetCategory: {},
@@ -39,7 +52,8 @@ export default {
     ]),
 
     processSave() {
-
+      this.$emit('add-budget-category', this.budgetCategory)
+      this.budgetCategory = {}
     }
   },
   computed: {
