@@ -42,6 +42,7 @@ node {
   }
 
   stage('run docker') {
+    sh 'chmod 777 ./updateDocker.sh'
     sh './updateDocker.sh'
     sh 'docker run -p 8081:8081 -d --init simple-budget-app'
     sh 'docker container prune -f'
