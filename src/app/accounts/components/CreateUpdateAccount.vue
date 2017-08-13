@@ -1,7 +1,7 @@
 <template>
   <div id="accounts-create-edit-view">
     You can create and edit accounts with me, yay!
-    <router-link :to="{ name: 'accountsListView' }">View all accounts</router-link>
+    <router-link :to="{ name: 'accountsList' }">View all accounts</router-link>
 
     <form @submit.prevent="processSave" class="form">
       <label for="name" class="label">Name</label>
@@ -26,7 +26,7 @@
           <button class="button is-primary">Submit</button>
         </p>
         <p class="control">
-          <router-link :to="{ name: 'accountsListView' }"><button class="button is-link">Cancel</button></router-link>
+          <router-link :to="{ name: 'accountsList' }"><button class="button is-link">Cancel</button></router-link>
         </p>
       </div>
     </form>
@@ -68,7 +68,7 @@ export default {
 
     resetAndGo() {
       this.selectedAccount = {}
-      this.$router.push({ name: 'accountsListView' })
+      this.$router.push({ name: 'accountsList' })
     },
 
     saveNewAccount() {

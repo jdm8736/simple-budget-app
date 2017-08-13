@@ -8,7 +8,6 @@
       <p class="control">
         <datepicker name="month" input-class="input" format="MMMM yyyy" v-model="selectedBudget.month"></datepicker>
       </p>
-      <label for="budgeted" class="label">Budgeted amount</label>
       <p class="control">
         Budgeted: ${{ selectedBudget.budgeted }}
       </p>
@@ -42,9 +41,9 @@
       <tbody>
         <tr v-for="bc in selectedBudget.budgetCategories">
           <td>{{ getCategoryById(bc.category).name }}</td>
-          <td>{{ bc.budgeted }}</td>
-          <td>{{ bc.spent }}</td>
-          <td>{{ bc.budgeted - bc.spent }}</td>
+          <td>${{ bc.budgeted }}</td>
+          <td>${{ bc.spent }}</td>
+          <td>${{ bc.budgeted - bc.spent }}</td>
         </tr>
       </tbody>
       <tfoot>
@@ -100,7 +99,8 @@ export default {
     ]),
 
     resetAndGo () {
-      this.selectedBudget = {}
+      this.selectedBudget = {};
+      this.$router.push({ name: 'budgetsList' });
     },
 
     saveNewBudget () {
@@ -114,6 +114,8 @@ export default {
     saveBudget () {
       this.updateBudget(this.selectedBudget).then(() => {
         this.resetAndGo();
+      }).catch((err) => {
+        console.error(err)
       });
     },
     processSave() {
@@ -130,7 +132,7 @@ export default {
           spent: 0
         }
       }).then(() => {
-        this.selectedBudget = this.getBudgetById(this.$route.params.budgetId)
+        this.selectedBudget = Object.assign({}, this.getBudgetById(this.$route.params.budgetId))
       })
     },
   },
@@ -144,5 +146,3 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
-</style>

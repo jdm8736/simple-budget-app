@@ -18,7 +18,7 @@ export const createBudget = ({ commit, state }, data) => {
   let id = guid()
   let budget = Object.assign({ id: id }, data)
 
-  budget.budget = 0
+  budget.budgeted = 0
   budget.spent = 0
   budget.income = 0
 
@@ -28,7 +28,7 @@ export const createBudget = ({ commit, state }, data) => {
   })
 }
 
-export const updateBudget = ({ commit }, data) => {
+export const updateBudget = ({ commit, state }, data) => {
   if(!verifyUniqueMonth(state.budgets, data)) {
     return Promise.reject(new Error('OH NO YOU CANT DO THAT THERES ALREADY ONE'))
   }
@@ -36,10 +36,10 @@ export const updateBudget = ({ commit }, data) => {
   saveBudget(data)
 }
 
-export const loadBudgets = (state) => {
+export const loadBudgets = ({ state, commit }) => {
   if (!state.budgets || Object.keys(state.budgets).length === 0) {
     return fetchBudgets().then(res => {
-      state.commit('LOAD_BUDGETS', res)
+      commit('LOAD_BUDGETS', res)
     })
   }
 }
@@ -54,6 +54,7 @@ export const createCategory = ({ commit, state }, data) => {
   let category = Object.assign({ id: id }, data)
   commit('CREATE_CATEGORY', { category: category })
   saveCategory(category)
+  return category
 }
 
 export const loadCategories = ({ state, commit }) => {

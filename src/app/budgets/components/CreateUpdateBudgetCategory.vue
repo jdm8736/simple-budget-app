@@ -18,7 +18,7 @@
             $<input type="number" class="input" v-model="budgetCategory.budgeted">
           </div>
           <div class="control is-expanded">
-            ${{ budgetCategory.spent }}
+            {{ budgetCategory.spent }}
           </div>
           <button @click.prevent="processSave">Add</button>
         </div>
@@ -49,19 +49,31 @@ export default {
 
   methods: {
     ...mapActions([
+      'createCategory',
+      'loadCategories'
     ]),
 
     processSave() {
       this.$emit('add-budget-category', this.budgetCategory)
       this.budgetCategory = {}
+    },
+
+    handleCreateCategory(category) {
+      let newCategory = { name: category }
+      this.createCategory(newCategory).then(val => {
+        this.updateCategorySelection(val)
+      })
+    },
+
+    updateCategorySelection(category) {
+      this.$set(this.budgetCategory, 'category', category)
     }
   },
   computed: {
     ...mapGetters([
+      'getCategorySelectList'
     ])
   },
 };
 </script>
 
-<style lang="css" scoped>
-</style>

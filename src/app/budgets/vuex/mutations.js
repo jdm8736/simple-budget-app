@@ -11,18 +11,6 @@ export default {
     state.budgets = payload
   },
 
-  CREATE_CATEGORY (state, payload) {
-    state.categories[payload.category.id] = payload.category
-  },
-
-  UPDATE_CATEGORY (state, payload) {
-    state.categories[payload.category.id] = payload.category
-  },
-
-  LOAD_CATEGORY (state, payload) {
-    state.categories = payload
-  },
-
   UPDATE_BUDGET_BALANCE (state, payload) {
     if(!(payload['param'] === 'budgeted' || payload['param'] === 'spent' || payload['param'] === 'income')) {
       throw new Error('UPDATE_BUDGET_BALANCE expects either param: budgeted, spent or income')
@@ -30,6 +18,19 @@ export default {
 
     state.budgets[payload.budget.id][payload.param] += parseFloat(payload.value)
   },
+  CREATE_CATEGORY (state, payload) {
+    Vue.set(state.categories, payload.category.id, payload.category)
+  },
+
+  UPDATE_CATEGORY (state, payload) {
+    state.categories[payload.category.id] = payload.category
+  },
+
+  LOAD_CATEGORIES (state, payload) {
+    state.categories = payload
+  },
+
+
 
   CREATE_EMPTY_BUDGET_CATEGORY_OBJECT (state, payload) {
     Vue.set(state.budgets[payload.id], 'budgetCategories', {})
