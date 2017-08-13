@@ -38,16 +38,11 @@ node {
 
   stage('build docker') {
     sh 'docker --version'
-    // docker.withTool('Docker') {
-    //   sh 'printenv'
-    //   sh 'docker images'
-    //   base = docker.build('budget-app')
-    // }
+    sh 'docker build -t simple-budget-app .'
   }
 
   stage('run docker') {
-    echo 'Kill docker image here'
-    echo 'Run docker image here -p 8081:8081 -d --init'
-    echo 'Prune docker images here'
+    sh 'docker run -p 8081:8081 -d --init simple-budget-app'
+    sh 'docker container prune -y'
   }
 }
