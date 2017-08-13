@@ -43,6 +43,6 @@ node {
 
   stage('run docker') {
     sh 'docker run -p 8081:8081 -d --init simple-budget-app'
-    sh 'docker container prune -y'
+    sh 'docker container prune -f'
   }
 }
