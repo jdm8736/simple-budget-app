@@ -15,7 +15,6 @@ else
   if [ ! "$container_image_sha" == "$latest_image_sha" ]; then
     echo "Found mismatch, restarting docker container"
     docker kill $container_name
-    docker rm `docker prune -f`
     docker run $docker_run_opts --name $container_name $image_name
   fi
 fi
