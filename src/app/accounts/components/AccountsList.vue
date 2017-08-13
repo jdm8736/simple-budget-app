@@ -1,6 +1,6 @@
 <template>
   <div id="accounts-list-view">
-    <h1>Accounts</h1>
+    <h1>Account Listing</h1>
 
     <router-link :to="{ name: 'createAccount' }">Add an Account</router-link>
     <router-link :to="{ name: 'budgetsList' }">View budgets</router-link>
