@@ -1,6 +1,6 @@
 <template>
   <div id="accounts-list-view">
-    I'm a list of accounts OR AM I!
+    <h1>List of Accounts</h1>
 
     <router-link :to="{ name: 'createAccount' }">Add an Account</router-link>
     <router-link :to="{ name: 'budgetsList' }">View budgets</router-link>
