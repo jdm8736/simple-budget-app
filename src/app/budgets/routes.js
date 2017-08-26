@@ -1,4 +1,4 @@
-import * as components from './components'
+import * as components from './components';
 
 export default [
   {
@@ -16,4 +16,4 @@ export default [
     component: components.CreateUpdateBudget,
     name: 'updateBudget'
   }
-]
+];

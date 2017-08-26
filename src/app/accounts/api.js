@@ -1,32 +1,32 @@
-import localforage from 'localforage'
-import { processAPIData } from '../../utils'
+import localforage from 'localforage';
+import { processAPIData } from '../../utils';
 
-const ACCOUNT_NAMESPACE = 'ACCOUNT-'
+const ACCOUNT_NAMESPACE = 'ACCOUNT-';
 
 export const fetchAccounts = () => {
   return localforage.startsWith(ACCOUNT_NAMESPACE).then((res) => {
-    return processAPIData(res)
-  })
-}
+    return processAPIData(res);
+  });
+};
 
 export const saveAccount = (account) => {
   return localforage.setItem(
     ACCOUNT_NAMESPACE + account.id,
     account
   ).then((value) => {
-    return value
+    return value;
   }).catch((err) => {
-    console.error('oops! account was gone, see: ', err)
-  })
-}
+    console.log('oops! the account was too far gone, there was nothing we could do to save him ', err);
+  });
+};
 
 export const deleteAccount = (account) => {
   return localforage.removeItem(
     ACCOUNT_NAMESPACE + account.id
   ).then(() => {
-    return true
+    return true;
   }).catch((err) => {
-    console.error('THERE HAS BEEN AN ERROR SEEE? ', err)
-    return false
-  })
-}
+    console.log(err);
+    return false;
+  });
+};

@@ -1,4 +1,4 @@
-import * as components from './components'
+import * as components from './components';
 
 export default [
   {
@@ -14,6 +14,7 @@ export default [
   {
     path: '/accounts/:accountId/update',
     component: components.CreateUpdateAccount,
-    name: 'updateAccount'
+    name: 'updateAccount',
+    props: true
   }
-]
+];

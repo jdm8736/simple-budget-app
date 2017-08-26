@@ -1,10 +1,10 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import { routes } from '../app'
+import Vue from 'vue';
+import Router from 'vue-router';
+import { routes } from '../app';
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
-  mode: 'history',
+  mode: 'hash',
   routes: routes
-})
+});

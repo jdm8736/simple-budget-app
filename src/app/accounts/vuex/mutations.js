@@ -1,21 +1,26 @@
-import Vue from 'vue'
+import Vue from 'vue';
 
 export default {
   CREATE_ACCOUNT (state, payload) {
+    payload.account.balance = parseFloat(payload.account.balance);
     state.accounts[payload.account.id] = payload.account;
   },
 
-
   UPDATE_ACCOUNT (state, payload) {
-    state.accounts[payload.account.id] = payload.account
+    payload.account.balance = parseFloat(payload.account.balance);
+    state.accounts[payload.account.id] = payload.account;
   },
 
-
+  UPDATE_ACCOUNT_BALANCE (state, payload) {
+    state.accounts[payload.account.id].balance += parseFloat(payload.amount);
+  },
   DELETE_ACCOUNT (state, payload) {
-    Vue.delete(state.accounts, payload.account.id)
+    Vue.delete(state.accounts, payload.account.id);
   },
 
   LOAD_ACCOUNTS (state, payload) {
-    state.accounts = payload
-  },
-}
+    state.accounts = payload;
+
+    Object.values(state.accounts).forEach((o) => { o.balance = parseFloat(o.balance); });
+  }
+};
