@@ -11,6 +11,9 @@
               {{ account.name }} <span>${{ account.balance }}</span>
             </router-link>
           </li>
+          <li>
+            <a href="#">Net worth: <span>${{ netWorth }}</span></a>
+          </li>
         </ul>
       </li>
       <li><router-link :to="{ name: 'budgetsList' }">Budgets</router-link></li>
@@ -36,7 +39,18 @@ export default {
   computed: {
     ...mapState({
       accounts: state => state.accounts.accounts
-    })
+    }),
+
+    netWorth () {
+      let netWorth = 0;
+      Object.keys(this.accounts).map((key) => {
+        let account = this.accounts[key];
+        if(account && account.balance) {
+          netWorth += account.balance
+        }
+      } )
+      return netWorth
+    }
   }
 };
 </script>

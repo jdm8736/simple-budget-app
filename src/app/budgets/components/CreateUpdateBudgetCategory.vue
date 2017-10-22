@@ -1,5 +1,5 @@
 <template>
-  <tr id="budget-category-create-edit-view">
+  <tr id="budget-category-create-edit-view" v-on:keyup.enter="processSave">
 
       <td>
         <multiselect
@@ -11,6 +11,7 @@
           placeholder="Select or create a category"
           label="name"
           track-by="id"
+          :show-labels="false"
         ></multiselect>
       </td>
 
@@ -101,7 +102,7 @@ export default {
       // keep its internal value up to date with the value in our component. So we're skipping v-model
       // and handling updates manually.
       this.$set(this.budgetCategory, 'category', category);
-    }
+    },
   },
 
   computed: {

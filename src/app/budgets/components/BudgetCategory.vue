@@ -1,9 +1,11 @@
 <template>
-  <tr class="budget-item">
+  <tr class="budget-item"
+    :class="{ 'is-delinquent': (value.budgeted - value.spent) < 0 }"
+  >
     <td><span class="subtitle is-5">{{ getCategoryById(value.category).name }}</span></td>
     <td><span class="subtitle is-5">${{ value.budgeted }}</span></td>
     <td><span class="subtitle is-5">${{ value.spent }}</span></td>
-    <td><span class="subtitle is-5">${{ value.budgeted + value.spent }}</span></td>
+    <td><span class="subtitle is-5">${{ value.budgeted - value.spent }}</span></td>
     <td><a class="button" @click="$emit('edit-budget-category')">Edit</a></td>
   </tr>
 </template>

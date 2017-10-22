@@ -4,6 +4,32 @@
       <div class="level-left">
         <h1 class="title is-2">Transactions</h1>
       </div>
+      <div class="level-right">
+        <label>From</label>
+        <p class="control has-icon has-addons">
+          <datepicker
+            name="month"
+            input-class="input"
+            format="MM/dd/yyyy"
+            v-model="startDate"
+          ></datepicker>
+          <span class="icon">
+            <i class="fa fa-calendar" aria-hidden="true"></i>
+          </span>
+        </p>
+        <label>To</label>
+        <p class="control has-icon has-addons">
+          <datepicker
+            name="month"
+            input-class="input"
+            format="MM/dd/yyyy"
+            v-model="endDate"
+          ></datepicker>
+          <span class="icon">
+            <i class="fa fa-calendar" aria-hidden="true"></i>
+          </span>
+        </p>
+      </div>
     </nav>
 
     <table class="table is-bordered">
@@ -39,6 +65,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import Datepicker from 'vuejs-datepicker';
 
 import CreateUpdateTransaction from './CreateUpdateTransaction';
 import Transaction from './Transaction';
@@ -49,16 +76,24 @@ export default {
 
   components: {
     Transaction,
-    CreateUpdateTransaction
+    CreateUpdateTransaction,
+    Datepicker
   },
 
   data () {
+    let date = new Date();
+    let firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    let lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
     return {
-      activeTransaction: null
+      activeTransaction: null,
+      startDate: firstDay,
+      endDate: lastDay
     };
   },
 
   mounted () {
+    this.updateDateFilters({ startDate: this.startDate, endDate: this.endDate });
     this.loadTransactions();
   },
 
@@ -66,15 +101,17 @@ export default {
     ...mapActions([
       'createTransaction',
       'updateTransaction',
-      'loadTransactions'
+      'loadTransactions',
+      'updateDateFilters'
     ]),
 
     transactionComponent (transaction) {
+      console.log(transaction.date);
       if (this.activeTransaction && this.activeTransaction === transaction) {
         return 'CreateUpdateTransaction';
       }
       return 'Transaction';
-    }
+    },
   },
 
   computed: {
@@ -84,6 +121,18 @@ export default {
 
     sortedTransactions () {
       return sortObjects(this.transactions, 'date', false);
+    }
+  },
+
+  watch: {
+    startDate: function (val) {
+      this.updateDateFilters({ startDate: val })
+      this.loadTransactions();
+    },
+
+    endDate: function (val) {
+      this.updateDateFilters({ endDate: val })
+      this.loadTransactions();
     }
   }
 };

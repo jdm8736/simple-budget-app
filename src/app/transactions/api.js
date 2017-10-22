@@ -1,12 +1,14 @@
 import localforage from 'localforage';
-import { processAPIData } from '../../utils';
+import { processAPIData, filterObjects } from '../../utils';
 
 const TRANSACTION_NAMESPACE = 'TRANSACTION-';
 const BUSINESS_NAMESPACE = 'BUSINESS-';
 
-export const fetchTransactions = () => {
+export const fetchTransactions = (startDate, endDate) => {
   return localforage.startsWith(TRANSACTION_NAMESPACE).then(res => {
     //TODO handle errors
+    if(startDate) res = filterObjects(res, txn => txn.date >= startDate)
+    if(endDate) res = filterObjects(res, txn => txn.date <= endDate)
     return processAPIData(res);
   })
 }

@@ -32,3 +32,9 @@ export const sortObjects = (objects, key, reverse = false) => {
     return objects[k];
   });
 };
+
+export const filterObjects = (obj, predicate) => {
+  return Object.keys(obj)
+    .filter( key => predicate(obj[key]))
+    .reduce( (res, key) => (res[key] = obj[key], res), {});
+}

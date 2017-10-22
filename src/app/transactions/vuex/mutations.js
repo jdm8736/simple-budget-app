@@ -35,6 +35,11 @@ export default {
 
   DELETE_BUSINESS (state, payload) {
     Vue.delete(state.businesses, payload.business.id);
+  },
+
+  UPDATE_DATE_FILTERS (state, payload) {
+    state.startDate = payload.dateFilters.startDate || state.startDate;
+    state.endDate = payload.dateFilters.endDate || state.endDate;
   }
 
 

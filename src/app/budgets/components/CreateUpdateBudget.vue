@@ -92,7 +92,7 @@
             </td>
             <td>${{ selectedBudget.budgeted }}</td>
             <td>${{ selectedBudget.spent }}</td>
-            <td>${{ selectedBudget.budgeted + selectedBudget.spent }}</td>
+            <td>${{ selectedBudget.budgeted - selectedBudget.spent }}</td>
             <td></td>
           </tr>
         </tfoot>

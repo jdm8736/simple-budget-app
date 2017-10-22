@@ -21,6 +21,7 @@
         placeholder="Select a business"
         label="name"
         track-by="id"
+        :show-labels="false"
       ></multiselect>
     </td>
 
@@ -29,9 +30,12 @@
         :value="transaction.category"
         @input="updateSelection('category', $event)"
         :options="getCategorySelectList"
+        :taggable="true"
+        @tag="handleCreateCategory"
         placeholder="Select a category"
         label="name"
         track-by="id"
+        :show-labels="false"
       ></multiselect>
     </td>
 
@@ -43,6 +47,7 @@
         placeholder="Select an account"
         label="name"
         track-by="id"
+        :show-labels="false"
       ></multiselect>
     </td>
 
@@ -105,7 +110,6 @@ export default {
   },
 
   mounted () {
-    this.loadTransactions();
     this.loadBudgets();
     this.loadCategories();
     this.loadAccounts();
@@ -131,16 +135,17 @@ export default {
 
   methods: {
     ...mapActions([
-      'loadTransactions',
       'loadCategories',
       'loadAccounts',
       'loadBudgets',
       'createBusiness',
+      'createCategory',
       'createTransaction',
       'updateTransaction',
       'deleteTransaction',
       'loadBusinesses',
-      'deleteBusiness'
+      'deleteBusiness',
+      'createBudgetCategory',
     ]),
 
     processSave() {
@@ -184,30 +189,36 @@ export default {
       this.createBusiness(newBusiness).then(val => {
         this.updateSelection('business', val);
       })
-      }
     },
 
-    computed: {
-      ...mapGetters([
-        'getCategoryById',
-        'getAccountById',
-        'getCategorySelectList',
-        'getAccountSelectList',
-        'getBusinessSelectList',
-        'getBusinessById'
-      ])
-    },
-
-    watch: {
-      credit: function (val) {
-        this.transaction.amount = Math.abs(val);
-      },
-
-      debit: function (val) {
-        this.transaction.amount = -Math.abs(val);
-      }
+    handleCreateCategory (category) {
+      this.createCategory({ name: category, currentDate: this.transaction.date }).then((val) => {
+        this.updateSelection('category', val);
+      });
     }
+  },
 
+  computed: {
+    ...mapGetters([
+      'getCategoryById',
+      'getAccountById',
+      'getCategorySelectList',
+      'getAccountSelectList',
+      'getBusinessSelectList',
+      'getBusinessById',
+      'getBudgetByDate'
+    ])
+  },
+
+  watch: {
+    credit: function (val) {
+      this.transaction.amount = Math.abs(val);
+    },
+
+    debit: function (val) {
+      this.transaction.amount = -Math.abs(val);
+    }
+  }
 }
 </script>
 

@@ -48,12 +48,9 @@ export const deleteTransaction = ({ commit }, data) => {
 };
 
 export const loadTransactions = ({ state, commit }) => {
-  if (!state.transactions || Object.keys(state.transactions).length === 0) {
-    //TODO handle error
-    return fetchTransactions().then((res) => {
-      commit('LOAD_TRANSACTIONS', res);
-    });
-  }
+  return fetchTransactions(state.startDate, state.endDate).then((res) => {
+    commit('LOAD_TRANSACTIONS', res);
+  });
 };
 
 export const createBusiness = ({ commit, state }, data) => {
@@ -78,3 +75,7 @@ export const deleteBusiness = ({ commit }, data) => {
   commit('DELETE_BUSINESS', { business: data });
   deleteBusinessFromAPI(data);
 };
+
+export const updateDateFilters = ({ commit }, data) => {
+  commit('UPDATE_DATE_FILTERS', { dateFilters: data });
+}

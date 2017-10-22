@@ -97,11 +97,24 @@ export const updateBudgetBalance = ({ commit, getters }, data) => {
   saveBudget(getters.getBudgetById(data.budget.id));
 };
 
-export const createCategory = ({ commit, state }, data) => {
+export const createCategory = ({ commit, getters, dispatch, state }, data) => {
   let id = guid();
   let category = Object.assign({ id: id }, data);
   commit('CREATE_CATEGORY', { category: category });
   saveCategory(category);
+
+  if (data.currentDate) {
+    let currentBudget = getters.getBudgetByDate(data.currentDate);
+
+    dispatch('createBudgetCategory', {
+      budget: currentBudget,
+      budgetCategory: {
+        category: id,
+        budgeted: 0,
+        spent: 0
+      }
+    })
+  }
 
   return category;
 };
